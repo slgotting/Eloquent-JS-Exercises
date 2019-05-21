@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+
+        <style>body { min-height: 200px }</style>
+        <img src="img/cat.png" id="cat" style="position: absolute">
+        <img src="img/hat.png" id="hat" style="position: absolute">
+        
+</body>
+</html>
+
+
+
+<script>
+
+
+/*for (let child of Array.from(document.body.children)) {
+	let newName = child.nodeName.toLowerCase()
+  let newNode = document.body.newName
+  let trueNode = document.querySelector(newName)
+  console.log(newName)
+  console.log(newNode)
+  console.log(trueNode)
+  }*/
+
+  function recursion(node, tagName, elements) {
+if (Array.from(node.children).length === 0) {
+} else {
+  for (let child of Array.from(node.children)) {
+    if (child.nodeName.toLowerCase() == tagName) {
+        elements.push(child)
+        }
+  recursion(child, tagName, elements)
+    }
+}
+return elements
+}
+
+
+function byTagName(node, tagName) {
+elements = [];
+elements.concat(recursion(node, tagName, elements))
+return elements;
+}
+
+
+console.log('H1 count')
+console.log(byTagName(document.body, "h1").length);
+// → 1
+console.log('Span count')
+console.log(byTagName(document.body, "span").length);
+// → 3
+let para = document.querySelector("p");
+console.log('p span count')
+console.log(byTagName(para, "span").length);
+// → 2
+
+
+</script>
