@@ -1,0 +1,93 @@
+<!-- 
+Tabs
+
+Instructions:
+
+Tabbed panels are widely used in user interfaces. They allow you to select
+an interface panel by choosing from a number of tabs “sticking out” above 
+an element.
+
+In this exercise you must implement a simple tabbed interface. Write a 
+function, asTabs, that takes a DOM node and creates a tabbed interface 
+showing the child elements of that node. It should insert a list of <button> 
+elements at the top of the node, one for each child element, containing 
+text retrieved from the data-tabname attribute of the child. All but one of 
+the original children should be hidden (given a display style of none). The 
+currently visible node can be selected by clicking the buttons.
+
+When that works, extend it to style the button for the currently selected 
+tab differently so that it is obvious which tab is selected.
+ -->
+<!-- 
+Initial Script:
+<tab-panel>
+        <div data-tabname="one">Tab one</div>
+        <div data-tabname="two">Tab two</div>
+        <div data-tabname="three">Tab three</div>
+      </tab-panel>
+      <script>
+        function asTabs(node) {
+          // Your code here.
+          
+        }
+        asTabs(document.querySelector("tab-panel"));
+      </script>
+ -->
+
+ <tab-panel>
+    <div data-tabname="one">Tab one</div>
+    <div data-tabname="two">Tab two</div>
+    <div data-tabname="three">Tab three</div>
+</tab-panel>
+
+
+<style>
+    .tab-active {
+        border: none;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .tab-inactive {
+        outline: none;
+        box-shadow: 0 1px 2px black;
+    }
+
+
+</style>
+
+
+<script>
+    let tabs = Array.from(document.querySelectorAll("div[data-tabname]"));
+    let tabBtns = [];
+
+    function asTabs(node) {
+        // Your code here.
+        for (let tab of tabs) {
+            let newTab = document.createElement('button');
+            newTab.classList.add('tab-inactive')
+            newTab.innerText = tab.dataset.tabname;
+            newTab.addEventListener('click', setCurrentTab);
+            tabBtns.push(newTab);
+            node.insertBefore(newTab, tabs[0]);
+        }
+    }
+    function setCurrentTab(e) {
+        for (let btn of tabBtns) {
+            btn.classList.remove('tab-active')
+            btn.classList.add('tab-inactive')
+        }
+        this.classList.remove('tab-inactive')
+        this.classList.add('tab-active')
+
+        for (let tab of tabs) {
+            if (this.innerText != tab.dataset.tabname) {
+                tab.style.display = 'none';
+            } else {
+                tab.style.display = 'block';
+            }
+        }
+    }
+
+    asTabs(document.querySelector("tab-panel"));
+</script>
